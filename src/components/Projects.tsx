@@ -17,6 +17,7 @@ const Projects: React.FC = () => {
       name: 'Diodon OS',
       description: 'A Linux-based operating system designed specifically for programmers, built primarily in C. Features an optimized development environment with custom tools and utilities.',
       technologies: ['C', 'Linux Kernel', 'Assembly', 'Shell Scripting'],
+      githubLink: 'https://github.com/MRMCBlob/DiodonOS',
       status: 'in-progress',
       featured: true
     },
@@ -24,7 +25,7 @@ const Projects: React.FC = () => {
       name: 'Triangular Bot',
       description: 'A fully-featured Discord bot built with TypeScript, featuring modular components written in Go, C, and Rust for optimal performance.',
       technologies: ['TypeScript', 'Go', 'C', 'Rust', 'Discord.js', 'Node.js'],
-      githubLink: 'https://github.com/MRMCBlob',
+      githubLink: 'https://github.com/triangular-discord',
       status: 'in-progress',
       featured: true
     },
