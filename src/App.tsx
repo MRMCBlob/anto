@@ -12,7 +12,7 @@ import './App.css';
 function App() {
   return (
   <>
-  <Analytics/>
+    <Analytics/>
     <ThemeProvider>
       <div className="App">
         <Header />
