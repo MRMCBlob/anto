@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Projects.css';
+
+interface Partner {
+  name: string;
+  githubUsername: string;
+}
 
 interface Project {
   name: string;
@@ -9,7 +14,74 @@ interface Project {
   githubLink?: string;
   status: 'in-progress' | 'completed';
   featured?: boolean;
+  partners?: Partner[];
 }
+
+interface GitHubUser {
+  avatar_url: string;
+  html_url: string;
+  login: string;
+}
+
+// GitHub API service
+const fetchGitHubUser = async (username: string): Promise<GitHubUser | null> => {
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    if (response.ok) {
+      return await response.json();
+    }
+    return null;
+  } catch (error) {
+    console.error(`Failed to fetch GitHub user ${username}:`, error);
+    return null;
+  }
+};
+
+// PartnerCard component
+const PartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => {
+  const [githubData, setGithubData] = useState<GitHubUser | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadGitHubData = async () => {
+      setLoading(true);
+      const data = await fetchGitHubUser(partner.githubUsername);
+      setGithubData(data);
+      setLoading(false);
+    };
+
+    loadGitHubData();
+  }, [partner.githubUsername]);
+
+  const handlePartnerClick = () => {
+    if (githubData?.html_url) {
+      window.open(githubData.html_url, '_blank', 'noopener noreferrer');
+    }
+  };
+
+  return (
+    <div className="partner-card" onClick={handlePartnerClick} style={{ cursor: 'pointer' }}>
+      <div className="partner-avatar">
+        {loading ? (
+          <div className="avatar-placeholder">
+            <div className="loading-spinner"></div>
+          </div>
+        ) : githubData ? (
+          <img 
+            src={githubData.avatar_url} 
+            alt={`${partner.name}'s GitHub avatar`}
+            className="partner-image"
+          />
+        ) : (
+          <div className="avatar-placeholder">
+            <span>?</span>
+          </div>
+        )}
+      </div>
+      <span className="partner-name">{partner.name}</span>
+    </div>
+  );
+};
 
 const Projects: React.FC = () => {
   const projects: Project[] = [
@@ -19,15 +91,22 @@ const Projects: React.FC = () => {
       technologies: ['C', 'Linux Kernel', 'Assembly', 'Shell Scripting'],
       githubLink: 'https://github.com/MRMCBlob/DiodonOS',
       status: 'in-progress',
-      featured: true
+      featured: true,
+      partners: [
+        { name: 'Logical', githubUsername: 'logical-os' }
+      ]
     },
     {
       name: 'Triangular Bot',
       description: 'A fully-featured Discord bot built with TypeScript, featuring modular components written in Go, C, and Rust for optimal performance.',
       technologies: ['TypeScript', 'Go', 'C', 'Rust', 'Discord.js', 'Node.js'],
       githubLink: 'https://github.com/triangular-discord',
+      liveLink: 'https://triangular.sh/',
       status: 'in-progress',
-      featured: true
+      featured: true,
+      partners: [
+        { name: 'Byteslayer', githubUsername: 'thebyteslayer' }
+      ]
     },
     {
       name: 'Driftaway',
@@ -35,7 +114,22 @@ const Projects: React.FC = () => {
       technologies: ['Multi-language', 'Documentation', 'API Design', 'Web Platform'],
       githubLink: 'https://github.com/MRMCBlob',
       status: 'in-progress',
-      featured: true
+      featured: true,
+      partners: [
+        { name: 'Logical', githubUsername: 'logical-os' }
+      ]
+
+    },
+    {
+      name: 'AVRIM',
+      description: 'A WEB based progression game inspired by industrialist.',
+      technologies: ['TypeScript', 'Web Platform'],
+      githubLink: 'https://github.com/MRMCBlob',
+      status: 'in-progress',
+      featured: true,
+      partners: [
+        { name: 'Logical', githubUsername: 'logical-os' }
+      ]
     }
   ];
 
@@ -80,6 +174,17 @@ const Projects: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {project.partners && project.partners.length > 0 && (
+                <div className="project-partners">
+                  <h4 className="partners-label">Partners:</h4>
+                  <div className="partners-list">
+                    {project.partners.map((partner, index) => (
+                      <PartnerCard key={index} partner={partner} />
+                    ))}
+                  </div>
+                </div>
+              )}
               
               <div className="project-links">
                 {project.liveLink && (
@@ -94,7 +199,7 @@ const Projects: React.FC = () => {
                       <polyline points="15,3 21,3 21,9"></polyline>
                       <line x1="10" y1="14" x2="21" y2="3"></line>
                     </svg>
-                    Live Demo
+                    Visit
                   </a>
                 )}
                 {project.githubLink && (
