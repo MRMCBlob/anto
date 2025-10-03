@@ -97,6 +97,17 @@ const Projects: React.FC = () => {
       ]
     },
     {
+      name: 'Stream',
+      description: 'The best Software for hosting providers to manage their servers and get advanced analytics and monitoring + the best attack prevention with algorythms and ML Models.',
+      technologies: ['Go', 'Bash Script'],
+      githubLink: 'https://github.com/MRMCBlob',
+      status: 'in-progress',
+      featured: true,
+      partners: [
+        { name: 'Byteslayer', githubUsername: 'thebyteslayer' }
+      ]
+    },
+    {
       name: 'Triangular Bot',
       description: 'A fully-featured Discord bot built with TypeScript, featuring modular components written in Go, C, and Rust for optimal performance.',
       technologies: ['TypeScript', 'Go', 'C', 'Rust', 'Discord.js', 'Node.js'],
