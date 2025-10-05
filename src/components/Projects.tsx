@@ -97,6 +97,13 @@ const Projects: React.FC = () => {
       ]
     },
     {
+      name: 'W:/Auth',
+      description: 'A Go based Authentication system build to be easy to implement but as secure as possible.',
+      technologies: ['Go'],
+      status: 'in-progress',
+      featured: true
+    },
+    {
       name: 'Stream',
       description: 'The best Software for hosting providers to manage their servers and get advanced analytics and monitoring + the best attack prevention with algorythms and ML Models.',
       technologies: ['Go', 'Bash Script'],
