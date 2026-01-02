@@ -15,7 +15,7 @@
     "@vercel/analytics": "^1.5.0",
     "canvas": "^3.2.0",
     "fast-average-color": "^9.5.0",
-    "next": "^15.5.2",
+    "next": "15.5.9",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2",
